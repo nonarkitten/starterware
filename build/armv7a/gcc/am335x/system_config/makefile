@@ -65,7 +65,7 @@ SOURCE= ${SYSCONFIG_SRC}/mmu.c                 \
 #
 # Add compiler options to compile NEON SIMD instructions
 #
-CFLAGS+= -mfpu=neon -mfloat-abi=softfp
+# CFLAGS+= -mfpu=neon -mfloat-abi=softfp
 
 #
 # Rules for building the source files

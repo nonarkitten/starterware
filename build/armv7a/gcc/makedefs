@@ -41,7 +41,7 @@
 # shall point to the installation of toolchain
 #
 ifneq (${LIB_PATH},)
-LIB_GCC=${LIB_PATH}/lib/gcc/arm-none-eabi/4.7.3/
+LIB_GCC=$(wildcard ${LIB_PATH}/lib/gcc/arm-none-eabi/*)/
 LIB_C=${LIB_PATH}/arm-none-eabi/lib/
 else
 LIB_GCC=$(dir $(shell $(CC) $(CFLAGS) -print-libgcc-file-name))
@@ -131,8 +131,8 @@ IPATH=-I${ROOT}/include \
 #
 # Library paths
 #
-LPATH=-L"${LIB_C}" \
-      -L"${LIB_GCC}" \
+LPATH=-L"${LIB_C}/fpu" \
+      -L"${LIB_GCC}/fpu" \
       -L${DRIVERS_BIN}/${TARGET_MODE} \
       -L${PLATFORM_BIN}/${TARGET_MODE} \
       -L${SYSCONFIG_BIN}/${TARGET_MODE} \
@@ -169,7 +169,7 @@ CFLAGS+=--specs=rdimon.specs
 RUNTIMELIB = -lrdimon -lc -lgcc
 endif
 
-CFLAGS=-mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a
+CFLAGS=-mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a -mfpu=neon -mfloat-abi=hard
 CFLAGS+=-c ${${TARGET_MODE}_FLAG} -mlong-calls -fdata-sections -funsigned-char \
             -ffunction-sections -Wall ${IPATH} -Dgcc ${DEVICE_D} ${EVM_D} \
             -D SUPPORT_UNALIGNED -D ${BOOT} -D${CONSOLE}
