@@ -44,8 +44,8 @@ ifneq (${LIB_PATH},)
 LIB_GCC=$(wildcard ${LIB_PATH}/lib/gcc/arm-none-eabi/*)/
 LIB_C=${LIB_PATH}/arm-none-eabi/lib/
 else
-LIB_GCC=$(dir $(shell $(CC) -mfloat-abi=hard -print-libgcc-file-name))
-LIB_C=$(dir $(shell $(CC) -mfloat-abi=hard -print-file-name=libc.a))
+LIB_GCC=$(subst libgcc.a,,$(shell $(CC) -mfloat-abi=hard -print-libgcc-file-name))
+LIB_C=$(subst libc.a,,$(shell $(CC) -mfloat-abi=hard -print-file-name=libc.a))
 endif
 
 #
