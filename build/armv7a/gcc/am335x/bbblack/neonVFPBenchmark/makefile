@@ -95,7 +95,7 @@ APP_SRC=$(APP)/*.c
 FPU=NEON
 
 ifeq ($(FPU), NEON)
-CFLAGS+= -mfpu=neon -mfloat-abi=softfp -ftree-vectorize
+CFLAGS+= -mfpu=neon -mfloat-abi=hard -ftree-vectorize
 
 #
 # Include Neon math lib for Neon FPU compilation
@@ -111,7 +111,7 @@ CFLAGS+=-I$(MATHLIB)/src \
 endif
 
 ifeq ($(FPU), VFP)
-CFLAGS+= -mfpu=vfpv3 -mfloat-abi=softfp
+CFLAGS+= -mfpu=vfpv3 -mfloat-abi=hard
 endif
 
 

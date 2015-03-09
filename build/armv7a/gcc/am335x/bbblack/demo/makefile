@@ -106,7 +106,7 @@ APP_SRC=$(APP)/*.c \
 # Add compiler options to compile NEON SIMD instructions
 # Needed for Save/Restore context for Power Management
 #
-CFLAGS+= -mfpu=neon -mfloat-abi=softfp
+CFLAGS+= -mfpu=neon -mfloat-abi=hard
 
 #
 # Required library files

@@ -44,8 +44,8 @@ ifneq (${LIB_PATH},)
 LIB_GCC=$(wildcard ${LIB_PATH}/lib/gcc/arm-none-eabi/*)/
 LIB_C=${LIB_PATH}/arm-none-eabi/lib/
 else
-LIB_GCC=$(dir $(shell $(CC) $(CFLAGS) -print-libgcc-file-name))
-LIB_C=$(dir $(shell $(CC) $(CFLAGS) -print-file-name=libc.a))
+LIB_GCC=$(dir $(shell $(CC) -mfloat-abi=hard -print-libgcc-file-name))
+LIB_C=$(dir $(shell $(CC) -mfloat-abi=hard -print-file-name=libc.a))
 endif
 
 #
@@ -131,8 +131,8 @@ IPATH=-I${ROOT}/include \
 #
 # Library paths
 #
-LPATH=-L"${LIB_C}/fpu" \
-      -L"${LIB_GCC}/fpu" \
+LPATH=-L"${LIB_C}" \
+      -L"${LIB_GCC}" \
       -L${DRIVERS_BIN}/${TARGET_MODE} \
       -L${PLATFORM_BIN}/${TARGET_MODE} \
       -L${SYSCONFIG_BIN}/${TARGET_MODE} \
