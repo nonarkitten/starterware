@@ -40,12 +40,13 @@
 # Toolchain/library path. LIB_PATH is an exported environmental variable which
 # shall point to the installation of toolchain
 #
+# FIXME ofr when LIB_PATH is set, it assumes arm-none-eabi prefix, but it can be arm-eabi, or whatever!
 ifneq (${LIB_PATH},)
 LIB_GCC=$(wildcard ${LIB_PATH}/lib/gcc/arm-none-eabi/*)/
 LIB_C=${LIB_PATH}/arm-none-eabi/lib/
 else
-LIB_GCC=$(subst libgcc.a,,$(shell $(CC) -mfloat-abi=hard -print-libgcc-file-name))
-LIB_C=$(subst libc.a,,$(shell $(CC) -mfloat-abi=hard -print-file-name=libc.a))
+LIB_GCC=$(subst libgcc.a,,$(shell $(CC) -mfloat-abi=hard -march=armv7-a+simd+fp -print-libgcc-file-name))
+LIB_C=$(subst libc.a,,$(shell $(CC) -mfloat-abi=hard -march=armv7-a+simd+fp -print-file-name=libc.a))
 endif
 
 #
@@ -169,7 +170,7 @@ CFLAGS+=--specs=rdimon.specs
 RUNTIMELIB = -lrdimon -lc -lgcc
 endif
 
-CFLAGS=-mcpu=cortex-a8 -mtune=cortex-a8 -march=armv7-a -mfpu=neon -mfloat-abi=hard
+CFLAGS=-march=armv7-a+fp+simd -mtune=cortex-a8 -mfpu=neon -mfloat-abi=hard
 CFLAGS+=-c ${${TARGET_MODE}_FLAG} -mlong-calls -fdata-sections -funsigned-char \
             -ffunction-sections -Wall ${IPATH} -Dgcc ${DEVICE_D} ${EVM_D} \
             -D SUPPORT_UNALIGNED -D ${BOOT} -D${CONSOLE}
